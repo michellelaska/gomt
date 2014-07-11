@@ -199,7 +199,7 @@ return {
 
       animation = {
         sheet = "images/sheets/pinecone.png",
-        size  = { 30, 30 },
+        size  = { 42, 42 },
         frames = 1,
         time = 500,
       },
@@ -208,7 +208,7 @@ return {
         density = 1.0,
         friction = 0.3,
         bounce = 0.3,
-        radius = 15
+        radius = 21
       },
 
       properties = {
@@ -221,7 +221,7 @@ return {
 
       animation = {
         sheet = "images/sheets/beehive.png",
-        size  = { 30, 30 },
+        size  = { 45, 45 },
         frames = 1,
         time = 500,
       },
@@ -230,7 +230,7 @@ return {
         density = 1.0,
         friction = 0.3,
         bounce = 0.3,
-        radius = 15
+        radius = 23
       },
 
       properties = {

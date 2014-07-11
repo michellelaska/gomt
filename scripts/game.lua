@@ -47,11 +47,12 @@ local function createEntitySprite(type, id, posX, posY)
 
 end
 
+
 -- list of game objects
 
 local animals = {}
 local weapons = {}
-local platforms = {}
+
 
 -- create level
 
@@ -143,7 +144,7 @@ local function createWeapon(type)
 
 	local weaponData = entityData.weapons[weapon.type]
 	weapon.properties = weaponData.properties
-	weapon.sprite = createEntitySprite("weapons", weapon.type, 160, 100)
+	weapon.sprite = createEntitySprite("weapons", weapon.type, 220, 100)
 	
 	table.insert(weapons, weapon)
 	physics.addBody(weapon.sprite, weaponData.physics)

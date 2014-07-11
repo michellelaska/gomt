@@ -23,7 +23,7 @@ function scene:create(event)
 
 	local sceneGroup = self.view
 
-	local background = display.newImageRect("images/background.png", display.contentWidth, display.contentHeight)
+	local background = display.newImageRect("images/menu.png", display.contentWidth, display.contentHeight)
 	background.anchorX, background.anchorY = 0, 0
 	background.x, background.y = 0, 0
 	
