@@ -5,6 +5,20 @@
 return {
 
   --
+  -- platforms
+  -- 
+
+  platforms = {
+
+    { x = 50,  y = 150, rotation = 5 },
+    { x = 200, y = 350, rotation = -5 },
+    { x = 50,  y = 500, rotation = 5 },
+    { x = 200, y = 750, rotation = -5 },
+    { x = 50,  y = 900, rotation = 5 }
+
+  },
+
+  --
   -- animals
   --
 
@@ -16,7 +30,7 @@ return {
 
       animation = {
         sheet = "images/sheets/bear.png",
-        size  = {147, 120},
+        size  = { 147, 120 },
         frames = 2,
         time = 500
       },
@@ -27,8 +41,10 @@ return {
         bounce = 0.3
       },
 
-      properties = {
-
+      behavior = {
+        eats = { },
+        jumps = { },
+        dies = { }
       }
     },
 
@@ -36,7 +52,7 @@ return {
 
       animation = {
         sheet = "images/sheets/mouse.png",
-        size  = {72, 54},
+        size  = { 72, 54 },
         frames = 2,
         time = 500
       },
@@ -56,7 +72,7 @@ return {
 
       animation = {
         sheet = "images/sheets/hedgehog.png",
-        size  = {84, 63},
+        size  = { 84, 63 },
         frames = 2,
         time = 500
       },
@@ -76,7 +92,7 @@ return {
 
       animation = {
         sheet = "images/sheets/squirrel.png",
-        size  = {84, 63},
+        size  = { 84, 63 },
         frames = 2,
         time = 500
       },
@@ -96,7 +112,7 @@ return {
 
       animation = {
         sheet = "images/sheets/rabbit.png",
-        size  = {84, 63},
+        size  = { 84, 63 },
         frames = 2,
         time = 500
       },
@@ -123,7 +139,7 @@ return {
 
       animation = {
         sheet = "images/sheets/acorn.png",
-        size  = {30, 30},
+        size  = { 30, 30 },
         frames = 1,
         time = 500,
       },
@@ -144,7 +160,7 @@ return {
 
       animation = {
         sheet = "images/sheets/berry.png",
-        size  = {30, 30},
+        size  = { 30, 30 },
         frames = 1,
         time = 500,
       },
@@ -165,7 +181,7 @@ return {
 
       animation = {
         sheet = "images/sheets/beehive.png",
-        size  = {30, 30},
+        size  = { 30, 30 },
         frames = 1,
         time = 500,
       },
@@ -186,7 +202,7 @@ return {
 
       animation = {
         sheet = "images/sheets/pinecone.png",
-        size  = {30, 30},
+        size  = { 30, 30 },
         frames = 1,
         time = 500,
       },
@@ -202,13 +218,5 @@ return {
 
       }
     }
-  },
-
-  --
-  -- platforms
-  -- 
-
-  platforms = {
-
   }
 }

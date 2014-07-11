@@ -11,7 +11,7 @@ local widget = require "widget"
 local playButton
 
 local function onPlayButtonRelease()
-	composer.gotoScene("scripts.scenes.game", "fade", 500)
+	composer.gotoScene("scripts.scenes.level", "fade", 500)
 	return true
 end
 

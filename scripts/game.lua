@@ -1,11 +1,11 @@
 --
---  world.lua
+--  game.lua
 --
-local entityData = require("scripts.entities")
+local entityData = require("scripts.data.entities")
 
 -- game data
 
-world = {
+game = {
 	points = 0
 }
 
@@ -54,10 +54,10 @@ local platforms = {}
 
 local function createBorders()
 	
-	local borders = {
-		display.newRect(0, 0, screenWidth, 1),
-		display.newRect(0, 0, 1, screenHeight),
-		display.newRect(screenWidth, 0, 1, screenHeight)
+	local borderRects = {
+		{ -1, 0, screenWidth, 1 },
+		{ 0, -1, 1, screenHeight },
+		{ screenWidth, 0, 1, screenHeight }
 	}
 
 	physicsProperties = { 
@@ -66,9 +66,11 @@ local function createBorders()
 		filter = { categoryBits = 1, maskBits = 7 } 
 	}
 
-	for i = 1, #borders do
-		borders[i]:setFillColor(100, 0, 0, 1)
-		physics.addBody(borders[i], "static", physicsProperties)
+	for i = 1, table.getn(borderRects) do
+		local borderRect = borderRects[i]
+		local border = display.newRect(borderRect[1], borderRect[2], borderRect[3], borderRect[4])
+		border:setFillColor(0, 0, 0, 0)
+		physics.addBody(border, "static", physicsProperties)
 	end
 
 end
@@ -76,14 +78,18 @@ end
 
 local function createPlatforms()
 
-	for i = 1, 5 do
-		local platform = display.newRect(10, 50 + i *100, screenWidth - 20, 30)
-		platform.anchorX, platform.anchorY = 0, 0
-		platform:setFillColor( .7 )
-		platform.rotation = 4.6
-		platforms[i] = platform
+	platformData = entityData.platforms
 
-		physics.addBody(platform, "static", { density=1.0, friction=0.3, bounce=0.3 })
+	physicsProperties = { 
+		density = 1,
+		friction = 0.5, 
+		bounce = 0.4
+	}
+
+	for i = 1, table.getn(platformData) do
+		local platform = display.newImage("images/platform.png", platformData[i].x, platformData[i].y)
+		platform:rotate(platformData[i].rotation)
+		physics.addBody(platform, "static", physicsProperties)
 	end
 
 end
@@ -113,20 +119,13 @@ local function createRandomAnimal()
 	print(animal.type)
 
 	local animalData = entityData.animals[animal.type]
-
 	animal.properties = animalData.properties
-
-	table.insert(animals, animal)
-
 	animal.sprite = createEntitySprite("animals", animal.type, 300, 300)
+
 	animal.sprite:play()
 
-	physics.addBody(animal.sprite, { 
-		density = animalData.physics.density, 
-		friction = animalData.physics.friction, 
-		bounce = animalData.physics.bounce
-	})
-
+	table.insert(animals, animal)
+	physics.addBody(animal.sprite, animalData.physics)
 	group:insert(animal.sprite)
 
 end
@@ -140,30 +139,20 @@ local function createWeapon(type)
 
 	local weaponData = entityData.weapons[weapon.type]
 	weapon.properties = weaponData.properties
-
-	table.insert(weapons, weapon)
-
 	weapon.sprite = createEntitySprite("weapons", weapon.type, 160, 100)
 	weapon.sprite:play()
 	
-	physics.addBody(weapon.sprite, { 
-		density = weaponData.physics.density, 
-		friction = weaponData.physics.friction, 
-		bounce = weaponData.physics.bounce, 
-		radius = weaponData.physics.radius 
-	})
-
+	table.insert(weapons, weapon)
+	physics.addBody(weapon.sprite, weaponData.physics)
 	group:insert(weapon.sprite)
 
 end
 
--- world
+-- game
 
-function world:create()
+function game:create()
 
 	createLevel()
-	--
-
 
 	createRandomAnimal()
 	createWeapon("acorn")
@@ -171,8 +160,8 @@ function world:create()
 	
 end
 
-function world:update()
+function game:update()
 
 end
 
-return world
+return game

@@ -7,7 +7,7 @@ local scene = composer.newScene()
 
 local physics = require("physics")
 
-local world = require("scripts.world")
+local game = require("scripts.game")
 
 function scene:create(event)
 	physics.start() 
@@ -15,7 +15,7 @@ function scene:create(event)
 	physics.setGravity(0, 9.81)
 	physics.pause()
 	
-	world:create()
+	game:create()
 end
 
 function scene:show(event)
