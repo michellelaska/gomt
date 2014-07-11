@@ -5,17 +5,29 @@
 return {
 
   --
-  -- platforms
+  -- level
   -- 
 
   platforms = {
 
-    { x = 50,  y = 150, rotation = 5 },
-    { x = 200, y = 350, rotation = -5 },
-    { x = 50,  y = 500, rotation = 5 },
-    { x = 200, y = 750, rotation = -5 },
-    { x = 50,  y = 900, rotation = 5 }
+    { x = 0,  y = 200, rotation = 5 },
+    { x = 200, y = 400, rotation = -5 },
+    { x = 0,  y = 560, rotation = 5 },
+    { x = 200, y = 790, rotation = -5 }
 
+  },
+
+  player = {
+
+    ["bear"] = {
+
+      animation = {
+        sheet = "images/sheets/bear.png",
+        size  = { 147, 120 },
+        frames = 2,
+        time = 500
+      },
+    },
   },
 
   --
@@ -26,11 +38,11 @@ return {
 
   animals = {
 
-    ["bear"] = {
+    ["squirrel"] = {
 
       animation = {
-        sheet = "images/sheets/bear.png",
-        size  = { 147, 120 },
+        sheet = "images/sheets/squirrel.png",
+        size  = { 84, 63 },
         frames = 2,
         time = 500
       },
@@ -42,29 +54,13 @@ return {
       },
 
       behavior = {
-        eats = { },
-        jumps = { },
-        dies = { }
-      }
-    },
-
-    ["mouse"] = {
-
-      animation = {
-        sheet = "images/sheets/mouse.png",
-        size  = { 72, 54 },
-        frames = 2,
-        time = 500
-      },
-
-      physics = {
-        density = 1.0,
-        friction = 0.3,
-        bounce = 0.3
+        eat = { },
+        jump = { },
+        die = { "acorn", "berry", "pinecone", "beehive"}
       },
 
       properties = {
-
+        speed = 3,
       }
     },
 
@@ -83,16 +79,22 @@ return {
         bounce = 0.3
       },
 
-      properties = {
+      behavior = {
+        eat = { "acorn" },
+        jump = { "pinecone" },
+        die = { "berry", "beehive"}
+      },
 
-      }
+      properties = {
+        speed = 3,
+      }  
     },
 
-    ["squirrel"] = {
+    ["mouse"] = {
 
       animation = {
-        sheet = "images/sheets/squirrel.png",
-        size  = { 84, 63 },
+        sheet = "images/sheets/mouse.png",
+        size  = { 72, 54 },
         frames = 2,
         time = 500
       },
@@ -103,8 +105,14 @@ return {
         bounce = 0.3
       },
 
+      behavior = {
+        eat = { "berry" },
+        jump = { "beehive" },
+        die = { "acorn", "pinecone" }
+      },
+    
       properties = {
-
+        speed = 2,
       }
     },
 
@@ -123,8 +131,14 @@ return {
         bounce = 0.3
       },
 
-      properties = {
+      behavior = {
+        eat = { },
+        jump = { "acorn", "berry", "pinecone" },
+        die = { "beehive"}
+      },
 
+      properties = {
+        speed = 1,
       }
     }
   },
@@ -132,6 +146,8 @@ return {
   --
   -- weapons
   --
+
+  weaponNames = {"acorn", "berry", "pinecone", "beehive"},
 
   weapons = {
 
@@ -152,7 +168,8 @@ return {
       },
 
       properties = {
-
+        speed = 1,
+        recharge = 1
       }
     },
 
@@ -173,28 +190,8 @@ return {
       },
 
       properties = {
-
-      }
-    },
-
-    ["beehive"] = {
-
-      animation = {
-        sheet = "images/sheets/beehive.png",
-        size  = { 30, 30 },
-        frames = 1,
-        time = 500,
-      },
-
-      physics = {
-        density = 1.0,
-        friction = 0.3,
-        bounce = 0.3,
-        radius = 15
-      },
-
-      properties = {
-
+        speed = 2,
+        recharge = 1
       }
     },
 
@@ -215,8 +212,31 @@ return {
       },
 
       properties = {
-
+        speed = 3,
+        recharge = 2
       }
-    }
+    },
+
+    ["beehive"] = {
+
+      animation = {
+        sheet = "images/sheets/beehive.png",
+        size  = { 30, 30 },
+        frames = 1,
+        time = 500,
+      },
+
+      physics = {
+        density = 1.0,
+        friction = 0.3,
+        bounce = 0.3,
+        radius = 15
+      },
+
+      properties = {
+        speed = 3,
+        recharge = 3
+      }
+    },
   }
 }

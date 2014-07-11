@@ -1,6 +1,9 @@
 --
 --  game.lua
 --
+
+local widget = require("widget")
+
 local entityData = require("scripts.data.entities")
 
 -- game data
@@ -102,13 +105,12 @@ local function createLevel()
 	background.x, background.y = 0, 0
 	group:insert(background)
 
-	local bear = createEntitySprite("animals", "bear", screenWidth / 6, 100)
+	local bear = createEntitySprite("player", "bear", screenWidth / 6, 90)
 	bear:play()
 
 	createBorders()
 	createPlatforms()
 end
-
 
 -- create animal
 
@@ -120,8 +122,8 @@ local function createRandomAnimal()
 
 	local animalData = entityData.animals[animal.type]
 	animal.properties = animalData.properties
-	animal.sprite = createEntitySprite("animals", animal.type, 300, 300)
-
+	animal.sprite = createEntitySprite("animals", animal.type, 210, 700)
+	animal.sprite.xScale = -1
 	animal.sprite:play()
 
 	table.insert(animals, animal)
@@ -148,11 +150,50 @@ local function createWeapon(type)
 
 end
 
+-- create ui
+
+local function createButton(label, handler)
+
+	return widget.newButton({
+		label = label,
+		labelColor = { default = { 255 }, over = { 128 } },
+		-- default = "images/ui/button.png",
+		-- over = "images/ui/button-over.png",
+		width = 150, 
+		height = 40,
+		onRelease = handler
+	})
+
+end
+
+local function createWeaponAcorn() createWeapon("acorn") end
+local function createWeaponBerry() createWeapon("berry") end
+local function createWeaponPineCone() createWeapon("pinecone") end
+local function createWeaponBeeHive() createWeapon("beehive") end
+
+local function createUI()
+
+	handlers = {
+		["acorn"] = createWeaponAcorn,
+		["berry"] = createWeaponBerry,
+		["pinecone"] = createWeaponPineCone,
+		["beehive"] = createWeaponBeeHive
+	}
+
+	for i = 1, table.getn(entityData.weaponNames) do
+		weapon = entityData.weaponNames[i]
+		local button = createButton(weapon, handlers[weapon])
+		group:insert(button)
+	end
+
+end
+
 -- game
 
 function game:create()
 
 	createLevel()
+	createUI()
 
 	createRandomAnimal()
 	createWeapon("acorn")
