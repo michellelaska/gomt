@@ -1,0 +1,3 @@
+#! /bin/sh
+
+/Applications/CoronaSDK/Corona\ Terminal main.lua
