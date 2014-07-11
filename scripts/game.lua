@@ -124,11 +124,13 @@ local function createRandomAnimal()
 	animal.properties = animalData.properties
 	animal.sprite = createEntitySprite("animals", animal.type, 210, 700)
 	animal.sprite.xScale = -1
-	animal.sprite:play()
-
+	
 	table.insert(animals, animal)
 	physics.addBody(animal.sprite, animalData.physics)
 	group:insert(animal.sprite)
+
+	animal.sprite:play()
+	animal.sprite:applyForce(0, 1.5, 0, 0)
 
 end
 
@@ -142,51 +144,68 @@ local function createWeapon(type)
 	local weaponData = entityData.weapons[weapon.type]
 	weapon.properties = weaponData.properties
 	weapon.sprite = createEntitySprite("weapons", weapon.type, 160, 100)
-	weapon.sprite:play()
 	
 	table.insert(weapons, weapon)
 	physics.addBody(weapon.sprite, weaponData.physics)
 	group:insert(weapon.sprite)
 
+	weapon.sprite:play()
+
 end
+
+
+local function handleCreateWeaponButton(event)
+
+	if event.phase == "ended" then
+		weapon = event.target.weapon
+		createWeapon(weapon)
+	end
+
+end
+
 
 -- create ui
 
-local function createButton(label, handler)
+local function createWeaponButton(weapon)
 
-	return widget.newButton({
-		label = label,
+	local button = widget.newButton({
+		label = weapon,
 		labelColor = { default = { 255 }, over = { 128 } },
+		fontSize = 32,
 		-- default = "images/ui/button.png",
 		-- over = "images/ui/button-over.png",
 		width = 150, 
 		height = 40,
-		onRelease = handler
+		onEvent = handleCreateWeaponButton
 	})
+
+	button.weapon = weapon
+
+	return button
 
 end
 
-local function createWeaponAcorn() createWeapon("acorn") end
-local function createWeaponBerry() createWeapon("berry") end
-local function createWeaponPineCone() createWeapon("pinecone") end
-local function createWeaponBeeHive() createWeapon("beehive") end
 
 local function createUI()
 
-	handlers = {
-		["acorn"] = createWeaponAcorn,
-		["berry"] = createWeaponBerry,
-		["pinecone"] = createWeaponPineCone,
-		["beehive"] = createWeaponBeeHive
-	}
-
 	for i = 1, table.getn(entityData.weaponNames) do
 		weapon = entityData.weaponNames[i]
-		local button = createButton(weapon, handlers[weapon])
+		local button = createWeaponButton(weapon)
+		button.x, button.y = screenWidth / 4 * (i - 1), screenHeight - 100
 		group:insert(button)
 	end
 
+	local score = display.newText({
+		text = "0",
+		-- font = native.systemFontBold, 
+		fontSize = 64
+	})
+
+	score.x, score.y = screenWidth - 80, 50
+	group:insert(score)
 end
+
+
 
 -- game
 
