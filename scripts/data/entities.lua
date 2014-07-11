@@ -86,7 +86,7 @@ return {
       },
 
       properties = {
-        speed = 3,
+        speed = 2,
       }  
     },
 
